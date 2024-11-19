@@ -1,0 +1,86 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 32px;
+    color: #0044cc;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+    border-bottom: 4px solid #0044cc;
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+.dropdown-section {
+    margin: 20px 0;
+    text-align: center;
+}
+
+label {
+    font-weight: bold;
+    color: #333;
+    margin-right: 10px;
+}
+
+select {
+    padding: 8px;
+    font-size: 16px;
+    margin-right: 20px;
+}
+
+.table-section {
+    margin-top: 30px;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+thead th {
+    background-color: #0044cc;
+    color: #fff;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f4f4f4;
+}
+
+tbody tr:hover {
+    background-color: #e0e0e0;
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 24px;
+    }
+    select {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    table th, table td {
+        font-size: 14px;
+    }
+}

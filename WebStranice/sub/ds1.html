@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalji Igre</title>
+    <link rel="stylesheet" href="css/ds1.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Detalji Igre: Dark Souls 1</h1> <!-- Ovdje promijeniti ime igre prema potrebi -->
+        </header>
+
+        <!-- Padajući meni za odabir kategorija podataka -->
+        <section class="dropdown-section">
+            <form method="GET" action="">
+                <label for="kategorija">Odaberite kategoriju:</label>
+                <select id="kategorija" name="kategorija" onchange="this.form.submit()">
+                    <option value="Boss" <?php if(isset($_GET['kategorija']) && $_GET['kategorija'] == "Boss") echo 'selected'; ?>>Boss</option>
+                    <option value="Heal" <?php if(isset($_GET['kategorija']) && $_GET['kategorija'] == "Heal") echo 'selected'; ?>>Heal</option>
+                    <option value="Oruzje" <?php if(isset($_GET['kategorija']) && $_GET['kategorija'] == "Oruzje") echo 'selected'; ?>>Oružje</option>
+                    <option value="Oklop" <?php if(isset($_GET['kategorija']) && $_GET['kategorija'] == "Oklop") echo 'selected'; ?>>Oklop</option>
+                    <option value="Modifier" <?php if(isset($_GET['kategorija']) && $_GET['kategorija'] == "Modifier") echo 'selected'; ?>>Modifier</option>
+                    <option value="Npc" <?php if(isset($_GET['kategorija']) && $_GET['kategorija'] == "Npc") echo 'selected'; ?>>NPC</option>
+                    <option value="Magije" <?php if(isset($_GET['kategorija']) && $_GET['kategorija'] == "Magije") echo 'selected'; ?>>Magije</option>
+                </select>
+
+                <!-- Sortiranje za klase (samo kada su relevantne) -->
+                <label for="sortKlasa">Sortiraj po klasi:</label>
+                <select id="sortKlasa" name="klasa" onchange="this.form.submit()">
+                    <option value="all" <?php if(isset($_GET['klasa']) && $_GET['klasa'] == "all") echo 'selected'; ?>>Sve klase</option>
+                    <option value="1" <?php if(isset($_GET['klasa']) && $_GET['klasa'] == "1") echo 'selected'; ?>>Klasa 1</option>
+                    <option value="2" <?php if(isset($_GET['klasa']) && $_GET['klasa'] == "2") echo 'selected'; ?>>Klasa 2</option>
+                    <option value="3" <?php if(isset($_GET['klasa']) && $_GET['klasa'] == "3") echo 'selected'; ?>>Klasa 3</option>
+                </select>
+            </form>
+        </section>
+
+        <!-- Tablica za prikaz podataka -->
+        <section class="table-section">
+            <table id="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ime</th>
+                        <th>Vrsta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    // Povezivanje na bazu podataka
+                    $servername = "db.vub.zone"; // zamijeni s podacima tvoje baze
+                    $username = "vvres";
+                    $password = "koliko99";
+                    $database = "vvresvub";
+
+                    $conn = new mysqli($servername, $username, $password, $database);
+
+                    if ($conn->connect_error) {
+                        die("Povezivanje na bazu nije uspjelo: " . $conn->connect_error);
+                    }
+
+                    // Postavljanje zadane kategorije i klase
+                    $kategorija = isset($_GET['kategorija']) ? $_GET['kategorija'] : 'Boss';
+                    $klasa = isset($_GET['klasa']) ? $_GET['klasa'] : 'all';
+
+                    // SQL upit ovisno o kategoriji i klasi
+                    switch ($kategorija) {
+                        case "Boss":
+                            $query = "SELECT * FROM Boss WHERE igra = 1";
+                            break;
+                        case "Heal":
+                            $query = "SELECT * FROM Heal WHERE igra = 1";
+                            break;
+                        case "Oruzje":
+                            $query = "SELECT * FROM Oruzje WHERE igra = 1" . ($klasa !== 'all' ? " AND klasa = $klasa" : "");
+                            break;
+                        case "Oklop":
+                            $query = "SELECT * FROM Oklop WHERE igra = 1";
+                            break;
+                        case "Modifier":
+                            $query = "SELECT * FROM Modifier WHERE igra = 1";
+                            break;
+                        case "Npc":
+                            $query = "SELECT * FROM Npc WHERE igra = 1";
+                            break;
+                        case "Magije":
+                            $query = "SELECT * FROM Magije WHERE igra = 1" . ($klasa !== 'all' ? " AND klasa = $klasa" : "");
+                            break;
+                        default:
+                            $query = "";
+                            break;
+                    }
+
+                    // Izvršavanje upita i ispis rezultata
+                    if ($query != "") {
+                        $result = $conn->query($query);
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo "<tr>";
+                                echo "<td>" . $row["id"] . "</td>";
+                                echo "<td>" . $row["ime"] . "</td>";
+                                echo "<td>" . ($row["vrsta"] ?? "") . "</td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='3'>Nema podataka za odabranu kategoriju i klasu.</td></tr>";
+                        }
+                    }
+
+                    $conn->close();
+                    ?>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</body>
+</html>

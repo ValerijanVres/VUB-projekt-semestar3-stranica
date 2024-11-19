@@ -1,0 +1,81 @@
+/* Osnovni stilovi za tablicu */
+.overlay table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+}
+
+.overlay th, .overlay td {
+    padding: 15px;
+    text-align: left;
+    border: 1px solid #555;
+}
+
+.overlay th {
+    background-color: #333;
+    color: #fff;
+}
+
+.overlay td {
+    background-color: #222;
+    color: #ccc;
+}
+
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+}
+
+.dropdown-btn:hover {
+    background-color: #0056b3;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    min-width: 160px;
+    z-index: 1;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.dropdown-content ul {
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+}
+
+.dropdown-content li {
+    padding: 8px 10px;
+    color: #fff;
+}
+
+.dropdown-content li:hover {
+    background-color: #007bff;
+    cursor: pointer;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+.dropdown-btn:focus {
+    outline: none;
+}
+
+
+
+
